@@ -12,6 +12,7 @@ class Config:
     # Load environment variables from .env file
     username = os.getenv("POSTGRES_USER")
     dbname = os.getenv("POSTGRES_DB")
+    vision_model = os.getenv("VISION_MODEL")
     encoded_password = urllib.parse.quote_plus(os.getenv("POSTGRES_PASS"))
 
     SQLALCHEMY_DATABASE_URI = f'postgresql://{username}:{encoded_password}@localhost/{dbname}'

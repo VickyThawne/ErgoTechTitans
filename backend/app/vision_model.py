@@ -1,17 +1,25 @@
-import cv2
-import numpy as np
 from ultralytics import YOLO
+from config import vision_model
+import pickle
 
-def load_model():
-    # Load your pre-trained model
-    model = ...  # Add your model loading code here
-    return model
+class VisionInference:
+    def __init__():
+        self.model = YOLO(vision_model)
 
-def process_image(image_path, model):
-    image = cv2.imread(image_path)
-    keypoints = model.predict(image)  # Add your model prediction code here
-    for point in keypoints:
-        cv2.circle(image, (point[0], point[1]), 5, (0, 255, 0), -1)
-    output_path = image_path.replace('uploads', 'outputs')
-    cv2.imwrite(output_path, image)
-    return output_path
+    def process_frame(frame):
+        results = model(frame, verbose=False)
+
+        bbox = results[0].boxes.xyxy.tolist()
+        keypoints = results[0].keypoints.numpy().xy.tolist()
+
+        all_data = []
+        for i in range(len(bbox)):
+            data = {
+                "bbox": bbox[i],
+                "keypoints": keypoints[i],
+                "person_id": i,
+                "image_id": pickle.dumps(frame)
+            }
+            all_data.append(data)
+
+        return all_data
