@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+from ultralytics import YOLO
 
 def load_model():
     # Load your pre-trained model
