@@ -15,7 +15,12 @@ def home():
     form = UploadForm()
     if form.validate_on_submit():
         image_file = form.image.data
-        filename = save_image(image_file)
+        filename = secure_filename(image_file.filename)
+        upload_path = os.path.join(app.root_path, 'static/uploads', filename)
+        image_file.save(upload_path)
+        image = Image(filename=filename, filepath=upload_path, upload_time=datetime.utcnow())
+        db.session.add(image)
+        db.session.commit()
         return redirect(url_for('result', filename=filename))
     return render_template('home.html', form=form)
 
