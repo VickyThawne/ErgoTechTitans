@@ -23,3 +23,7 @@ langchain==0.2.5
 langchain-community==0.2.5
 langchain-core==0.2.9
 google-auth==2.28.2
+gunicorn==22.0.0
+langchain-google-genai==1.0.7
+google-generativeai
+pillow
