@@ -10,8 +10,8 @@ def process_image(image_path):
     frame = cv2.imread(image_path)
     results = model(frame, verbose=False)
 
-    bbox = results[0].boxes.xyxyn.tolist()
-    keypoints = results[0].keypoints.numpy().xyn.tolist()
+    bbox = results[0].boxes.cpu().xyxyn.tolist()
+    keypoints = results[0].keypoints.cpu().numpy().xyn.tolist()
 
     data = {
         "bbox": bbox[0],
@@ -32,9 +32,5 @@ def take_diffrence(data1, data2):
 
     return diff
 
-data1 = process_image("4.jpg")
-data2 = process_image("base.jpg")
-
-diff = take_diffrence(data1, data2)
 
 pass

@@ -5,7 +5,6 @@ from langchain.output_parsers import ResponseSchema
 
 
 response_schemas = [
-    ResponseSchema(name="body_parts", description="list of body parts of the worker that are being used for the work."),
     ResponseSchema(name="worker_present", description="Whether a worker is visible in the image (true/false)"),
     ResponseSchema(name="worker_count", description="Number of workers visible in the image"),
     ResponseSchema(name="ppe_worn", description="List of PPE items worn by the worker(s)"),
