@@ -5,9 +5,12 @@ from werkzeug.utils import secure_filename
 from app import app, db
 from app.forms import UploadForm
 from app.models import Image
+
+from langchain_app.script import analyze_construction_image, image_analysis_chain
 # from app.vision_model import load_model, process_image
 from app.utils import save_image
 
+from langchain_app.response_schema import response_schemas
 # model = load_model()
 
 @app.route('/', methods=['GET', 'POST'])
@@ -20,6 +23,10 @@ def home():
         image_file.save(upload_path)
         image = Image(filename=filename, filepath=upload_path, upload_time=datetime.utcnow())
         db.session.add(image)
+
+        result = image_analysis_chain(upload_path)
+
+        db.session.add(result)
         db.session.commit()
         return redirect(url_for('result', filename=filename))
     return render_template('home.html', form=form)
