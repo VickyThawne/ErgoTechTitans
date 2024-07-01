@@ -14,6 +14,6 @@ class Config:
     dbname = os.getenv("POSTGRES_DB")
     encoded_password = urllib.parse.quote_plus(os.getenv("POSTGRES_PASS"))
 
-    SQLALCHEMY_DATABASE_URI = f'postgresql://{username}:{encoded_password}@localhost/{dbname}'
+    SQLALCHEMY_DATABASE_URI = f'postgresql://{username}:{encoded_password}@localhost:5433/{dbname}'
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False

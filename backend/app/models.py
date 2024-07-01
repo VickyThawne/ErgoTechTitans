@@ -1,26 +1,13 @@
 from app import db
 
-class Image(db.Model):
+class ImageDescription(db.Model):
     __tablename__ = "image_description"
 
     id = db.Column(db.Integer, primary_key=True)
     filename = db.Column(db.String(120), unique=True, nullable=False)
+    worker_details_id = db.Column(db.Integer, nullable=False)
     filepath = db.Column(db.String(120))
     upload_time = db.Column(db.DateTime, nullable=False)
-
-    def __repr__(self):
-        return f"Image('{self.filename}', '{self.upload_time}')"
-
-class ImageInformation(db.Model):
-    __tablename__ = 'image_information'
-
-    id = db.Column(db.Integer, primary_key=True)
-    worker_details_id = db.Column(db.Integer, nullable=False)
-    body_part_name = db.Column(db.String(255), nullable=False)
-    kp_x = db.Column(db.Float, nullable=True)
-    kp_y = db.Column(db.Float, nullable=True)
-    image_path = db.Column(db.String(255), nullable=False)
-    timestamp = db.Column(db.DateTime, nullable=False)
     gender = db.Column(db.String(50), nullable=True)
     worker_present = db.Column(db.Boolean, nullable=False)
     worker_count = db.Column(db.Integer, nullable=False)
@@ -40,6 +27,23 @@ class ImageInformation(db.Model):
     fatigue_indicators = db.Column(db.Boolean, nullable=False)
     cumulative_risk_score = db.Column(db.Integer, nullable=False)
     max_strain_in_part = db.Column(db.String(50))
+
+
+    def __repr__(self):
+        return f"Image('{self.filename}', '{self.upload_time}')"
+
+class ImageInformation(db.Model):
+    __tablename__ = 'image_information'
+
+    id = db.Column(db.Integer, primary_key=True)
+    worker_details_id = db.Column(db.Integer, nullable=False)
+    filepath = db.Column(db.String(120))
+
+    image_id = db.Column(db.Integer, nullable=True)
+    kp_x = db.Column(db.Float, nullable=True)
+    kp_y = db.Column(db.Float, nullable=True)
+    distance= db.Column(db.Float, nullable=True)
+    body_part_name = db.Column(db.String(255), nullable=False)
 
     def __repr__(self):
         return f'<ErgonomicAssessment {self.id}>'
